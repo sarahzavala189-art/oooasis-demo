@@ -1,0 +1,110 @@
+<!doctype html>
+<!-- This is the v49 build renamed to index.html for easy hosting -->
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OOOASIS — v49 (no animation, collage +48px)</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0B1957;--sky:#D1E8FF;--blue:#5784E6;--sand:#F8F3EA;--shadow:0 10px 24px rgba(11,25,87,.08);}
+*{box-sizing:border-box} body{margin:0;background:var(--sand);color:var(--ink);font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+.header{position:sticky;top:0;z-index:20;height:1in;background:#fff;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;padding:0 8px;box-shadow:0 6px 18px rgba(11,25,87,.06);overflow:hidden}
+.logo svg{height:350px;transform:translateY(8px)}
+.container{max-width:1160px;margin:0 auto;padding:0 16px}
+.hero{min-height:56vh;display:grid;grid-template-columns:1.05fr 1fr;gap:28px;align-items:center;position:relative}@media(max-width:900px){.hero{grid-template-columns:1fr}}
+.headline{font-size:clamp(34px,5vw,56px);margin:24px 0 10px} .headline .pop{background:linear-gradient(90deg,var(--sky),#fff);padding:2px 10px;border-radius:14px}
+.sub{color:#334155;position:relative}
+.date-card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:10px;display:flex;gap:8px;align-items:center;box-shadow:0 12px 30px rgba(11,25,87,.06);flex-wrap:wrap;margin-top:12px}
+.input{flex:1 1 200px;padding:12px;border:1px solid #cbd5e1;border-radius:12px}
+.btn{padding:12px 16px;border-radius:12px;border:1px solid var(--blue);background:var(--blue);color:#fff;font-weight:700;cursor:pointer}
+.btn.light{background:#fff;color:#0B1957;border-color:#cbd5e1} .btn.red{background:#ef4444;border-color:#ef4444} .btn.soon{background:#94a3b8;border-color:#94a3b8;cursor:not-allowed}
+.grid3{display:grid;grid-template-columns:1.2fr 1.2fr .9fr;gap:18px}
+.box{background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:16px;box-shadow:var(--shadow)}
+.list{display:flex;flex-direction:column;gap:12px} .small{font-size:12px;color:#475569}
+.todo{display:flex;gap:10px;border:1px solid #e5e7eb;border-radius:12px;padding:12px} .cb{width:18px;height:18px}
+.tag{padding:2px 8px;border-radius:10px;border:1px solid #e5e7eb;font-size:11px} .tag.high{background:#fee2e2} .tag.mid{background:#fef9c3} .tag.low{background:#e0e7ff} .tag.due{background:#ecfeff}
+.collage{position:relative;height:500px;margin-top:48px}
+.card{position:absolute;border-radius:26px;overflow:hidden;border:1px solid #e5e7eb;box-shadow:0 18px 40px rgba(11,25,87,.14);background:#fff}
+.card img{width:100%;height:100%;object-fit:cover}
+.c1{top:4px;left:12px;width:260px;height:300px;transform:rotate(-2deg);z-index:2}
+.c2{top:-18px;right:20px;width:240px;height:160px;transform:rotate(2deg);z-index:4}
+.c3{bottom:144px;right:8px;width:340px;height:200px;transform:rotate(-1deg);z-index:5}
+.c4{bottom:0;left:140px;width:340px;height:240px;transform:rotate(1.5deg);z-index:1}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 14px;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.2);opacity:0;transition:.3s} .toast.show{opacity:1}
+</style>
+<body>
+<div class="header"><div class="logo"><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 200'><text x='0' y='140' font-family='Arial Black, Arial' font-weight='900' font-size='160'>OOOASIS</text></svg></div><div>Demo — read‑only • nothing stored</div></div>
+<section class="container hero" id="hero">
+  <div>
+    <h1 class="headline"><span class="pop">Welcome Back!</span> Let’s Catch You Up</h1>
+    <p id="subcopy" class="sub">OOOASIS helps you catch up fast by organizing missed emails into time-saving insights. Select your dates to get started.</p>
+    <div class="date-card" id="dateCard">
+      <input id="fromTop" type="date" class="input" value="2025-08-18"> →
+      <input id="toTop" type="date" class="input" value="2025-08-27">
+      <button id="analyzeTop" class="btn">Analyze</button>
+    </div>
+  </div>
+  <div class="collage">
+    <div class="card c1"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB" alt=""></div>
+    <div class="card c2"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB" alt=""></div>
+    <div class="card c3" id="boatCard"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB" alt=""></div>
+    <div class="card c4"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB" alt=""></div>
+  </div>
+</section>
+<section id="resultsScreen" class="container" style="display:none;margin:24px auto 40px;">
+  <h2 id="resultsTitle">Let’s Catch You Up</h2>
+  <div class="grid3">
+    <div class="box">
+      <h3>To‑Do</h3><div class="small" style="margin-bottom:6px;">Sorted by priority & due date. Check items off.</div>
+      <div id="todoList" class="list"></div>
+    </div>
+    <div class="box"><h3>What I Missed — Project Updates</h3><div id="missedDecisions" class="list"></div></div>
+    <div class="box"><h3>Exports & Privacy</h3>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+        <button class="btn light" id="exportMD">Export Markdown</button>
+        <button class="btn soon" id="exportNotion">Export to Notion (coming soon)</button>
+        <button class="btn soon" id="exportSlack">Export to Slack (coming soon)</button>
+        <button class="btn red" id="deleteAll">Delete My Data</button>
+      </div>
+      <h3 style="margin:12px 0 8px;">Tester Notes (optional)</h3>
+      <div class="notes" style="display:flex;gap:8px;flex-direction:column;">
+        <textarea id="testerInput" placeholder="Paste a short quote from a tester (non‑work email only)."></textarea>
+        <div style="display:flex;gap:8px;"><button class="btn" id="addNote">Add Note</button></div>
+        <div id="notesList"></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div id="toast" class="toast" role="status" aria-live="polite">Coming soon</div>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://apis.google.com/js/api.js"></script>
+<script>
+const CLIENT_ID="1083053668594-pvcaf8fnnvad5a472i5q5jf975jt32cr.apps.googleusercontent.com"; const GMAIL_SCOPES='https://www.googleapis.com/auth/gmail.readonly openid email'; const DISCOVERY_DOCS=['https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest']; let tokenClient,gapiInited=false,gisInited=false;
+function gapiLoaded(){ gapi.load('client', async()=>{ await gapi.client.init({ discoveryDocs: DISCOVERY_DOCS }); gapiInited=true; }); }
+function gisLoaded(){ tokenClient=google.accounts.oauth2.initTokenClient({ client_id: CLIENT_ID, scope: GMAIL_SCOPES, prompt:'consent', callback:(resp)=>{} }); gisInited=true; }
+window.addEventListener('load', ()=>{ gapiLoaded(); gisLoaded(); });
+function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
+function parseLocalYMD(ymd){ const p=(ymd||'').split('-').map(Number); if(p.length<3) return null; return new Date(p[0],p[1]-1,p[2]); }
+function mapPriority(txt){ if(/(urgent|asap|eod|due|ship|launch|go-live|publish)/i.test(txt)) return "High"; if(/(review|confirm|approve|finalize|send|draft)/i.test(txt)) return "Mid"; return "Low"; }
+function fakeDue(priority){ const end=parseLocalYMD(document.getElementById('toTop').value)||new Date(); const d=new Date(end); if(priority==='High') d.setDate(d.getDate()-1); else if(priority==='Mid') d.setDate(d.getDate()+3); else d.setDate(d.getDate()+8); return d; }
+function extractInsights(msgs){ const updates=[], todos=[]; const decisionRE=/^(decision|decided|approved|approval|confirm(?:ed)?):\s*(.+)$/i; const deadlineRE=/^(deadline|due|by):\s*(.+)$/i; const actionRE=/^(action|next step|todo|task):\s*(.+)$/i; const statusRE=/^(status|update|blocked|unblocked):\s*(.+)$/i;
+  msgs.forEach(m=>{ const lines=(m.body||'').split(/[
+]+/).map(s=>s.trim()).filter(Boolean); let found=false; lines.forEach(L=>{ let mm; if((mm=L.match(decisionRE))){ updates.push({kind:'Decision',text:mm[2],src:m}); found=true; } else if((mm=L.match(deadlineRE))){ updates.push({kind:'Deadline',text:mm[2],src:m}); found=true; } else if((mm=L.match(statusRE))){ updates.push({kind:'Status',text:mm[2],src:m}); found=true; } else if((mm=L.match(actionRE))){ const pr=mapPriority(mm[2]); const dueDate=fakeDue(pr); todos.push({title:mm[2],priority:pr,dueDate, dueText:dueDate.toLocaleDateString(undefined,{month:'short',day:'2-digit',year:'numeric'}),src:m}); found=true; } });
+    if(!found){ const subj=(m.subject||'').toLowerCase(); if(/approved|greenlit|go-ahead|confirmed/.test(subj)) updates.push({kind:'Decision',text:m.subject,src:m});
+      else if(/rescheduled|moved|new date|deadline|due/.test(subj)) updates.push({kind:'Deadline',text:m.subject,src:m});
+      else if(/update|status|recap|summary|weekly/.test(subj)) updates.push({kind:'Status',text:m.subject,src:m});
+      else { const pr='Mid', dueDate=fakeDue(pr); todos.push({title:(m.subject||'Follow up'),priority:pr,dueDate,dueText:dueDate.toLocaleDateString(undefined,{month:'short',day:'2-digit',year:'numeric'}),src:m}); }
+    }
+  });
+  const rank={High:0,Mid:1,Low:2}; todos.sort((a,b)=>rank[a.priority]-rank[b.priority]||a.dueDate-b.dueDate); updates.sort((a,b)=>new Date(b.src.date)-new Date(a.src.date)); return {todos,updates}; }
+function render(summary){ const fromTop=document.getElementById('fromTop'); const toTop=document.getElementById('toTop'); document.getElementById('resultsTitle').textContent='Let’s Catch You Up: '+ new Date(fromTop.value).toLocaleDateString()+' → '+ new Date(toTop.value).toLocaleDateString(); const todoList=document.getElementById('todoList'); todoList.innerHTML=''; summary.todos.forEach(T=>{ const row=document.createElement('div'); row.className='todo'; const cb=document.createElement('input'); cb.type='checkbox'; cb.className='cb'; cb.onchange=()=>row.classList.toggle('done',cb.checked); const meta=document.createElement('div'); meta.innerHTML='<div style="font-weight:800">'+T.title+'</div><div class="small"><span class="tag '+(T.priority==='High'?'high':T.priority==='Mid'?'mid':'low')+'">'+T.priority+' Priority</span> <span class="tag due">Due: '+T.dueText+'</span> <span class="tag">From: '+(T.src.from||'')+'</span></div>'; row.appendChild(cb); row.appendChild(meta); todoList.appendChild(row); }); const md=document.getElementById('missedDecisions'); md.innerHTML=''; summary.updates.forEach(U=>{ const c=document.createElement('div'); c.className='box'; const when=new Date(U.src.date||Date.now()).toLocaleDateString(undefined,{month:'short',day:'2-digit'}); c.innerHTML='<div style="font-weight:800">'+U.kind+': '+U.text+'</div><div class="small">From: '+(U.src.from||'')+' • '+(U.src.subject||'')+' • '+when+'</div>'; md.appendChild(c); }); window.__oooSummary=summary; }
+document.getElementById('exportMD').onclick=()=>{ if(!window.__oooSummary) return showToast('Analyze first to export.'); const md=['# OOOASIS — Project Updates','','## Updates']; window.__oooSummary.updates.forEach(d=>md.push('- **'+d.kind+'** — '+d.text+' _(from '+(d.src.from||'')+', '+(d.src.subject||'')+')_')); md.push('','## Action List'); window.__oooSummary.todos.forEach(t=>md.push(`- **${t.priority}** — ${t.title} (Due: ${t.dueText})`)); const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([md.join('
+')],{type:'text/plain'})); a.download='oooasis_report.md'; a.click(); };
+document.getElementById('exportNotion').onclick=()=>showToast('Notion export coming soon'); document.getElementById('exportSlack').onclick=()=>showToast('Slack export coming soon'); document.getElementById('deleteAll').onclick=()=>{ window.__oooSummary=null; document.getElementById('notesList').innerHTML=''; document.getElementById('testerInput').value=''; showToast('Cleared this session'); setTimeout(()=>location.reload(),400); }; document.getElementById('addNote').onclick=()=>{ const t=document.getElementById('testerInput').value.trim(); if(!t) return showToast('Add some text first'); const n=document.createElement('div'); n.className='box'; n.textContent='“'+t+'”'; document.getElementById('notesList').appendChild(n); document.getElementById('testerInput').value=''; };
+function buildGmailQuery(){ const f=document.getElementById('fromTop').value.replaceAll('-','/'), t=document.getElementById('toTop').value.replaceAll('-','/'); return `after:${f} before:${t} -category:promotions -category:social`; }
+function getHeader(msg,name){ const h=(msg.payload?.headers||[]).find(h=>h.name?.toLowerCase()===name); return h?.value||''; }
+function decodeBody(payload){ if(!payload) return ''; if(payload.mimeType==='text/plain'&&payload.body?.data){ try{ return atob(payload.body.data.replace(/-/g,'+').replace(/_/g,'/')); }catch(e){ return ''; } } if(payload.parts) return payload.parts.map(decodeBody).join('
+'); return ''; }
+function ensureGmailAuth(){ return new Promise((resolve,reject)=>{ if(!gapiInited||!gisInited) return reject(new Error('Google APIs not ready yet')); tokenClient.callback=(resp)=>{ if(resp&&resp.access_token) resolve(true); else reject(new Error('No access token')); }; tokenClient.requestAccessToken({prompt:'consent'}); }); }
+async function fetchGmailMessages(){ const q=buildGmailQuery(); const list=await gapi.client.gmail.users.messages.list({ userId:'me', q, maxResults:50 }); const ids=(list.result.messages||[]).map(m=>m.id); const out=[]; for(const id of ids){ const m=await gapi.client.gmail.users.messages.get({ userId:'me', id, format:'full' }); const dateMs=Number(m.result.internalDate)||Date.now(); out.push({ id, from:getHeader(m.result,'from'), to:getHeader(m.result,'to'), subject:getHeader(m.result,'subject'), date:new Date(dateMs).toISOString(), body:decodeBody(m.result.payload)||m.result.snippet||'' }); } return out; }
+document.getElementById('analyzeTop').onclick=async()=>{ try{ if(!window.google||!window.gapi) throw new Error('Google scripts blocked'); await ensureGmailAuth(); const msgs=await fetchGmailMessages(); if(!msgs.length) return showToast('No messages in that window (non-promotions).'); const summary=extractInsights(msgs); document.getElementById('resultsScreen').style.display='block'; render(summary); window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'}); }catch(e){ console.error(e); showToast('Google sign-in was blocked or failed.'); } };
+</script>
+</body>
